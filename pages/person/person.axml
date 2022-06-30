@@ -1,0 +1,29 @@
+<view class="blank-page">
+  <!-- <button
+  a:if="{{!userInfo}}"
+  open-type="getAuthorize" 
+  onGetAuthorize="onGetUserInfo"
+  onError="onAuthError" 
+  scope='userInfo'
+>
+  获取用户信息
+</button> -->
+  <view class='head' a:if='{{userInfo}}'> 
+    <avatar  class='avatar' size='large' src='{{userInfo.avatar}}' />
+  </view>
+  <my-menu list={{likeList}}></my-menu>
+  
+  
+  <my-card title="激励计划">
+    <my-menu list={{excitationList}}></my-menu>
+  </my-card>
+  
+  <my-card title="云游专区">
+    <my-menu list={{roamList}}></my-menu>
+  </my-card>
+  
+  <my-card title="关于我们">
+    <my-menu list={{aboutList}}></my-menu>
+  </my-card>
+  
+</view>
