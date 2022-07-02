@@ -1,9 +1,6 @@
 {
   "usingComponents": {
     "tag": "antd-mini/es/Tag/index",
-    "notice": "antd-mini/es/NoticeBar/index",
-    "my-list": "/components/MyList/index.axml",
-    "list": "antd-mini/es/List/index",
-    "list-item": "antd-mini/es/List/ListItem/index"
+    "notice": "antd-mini/es/NoticeBar/index"
   }
 }
