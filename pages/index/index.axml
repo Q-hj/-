@@ -1,3 +1,5 @@
+<import src="../template/status.axml" />
+
 <view class="view">
   
   <view class="header relative  ">
@@ -36,27 +38,25 @@
       </navigator>
     </view>
     
-    <view class="track warp">
+    <view class="track warp" a:if="{{list.length}}">
       <view class="title">我的轨迹</view>
       <view class="track-list">
         
-        <view class="track-list-item">
+        <view class="track-list-item" a:for="{{list}}">
           
           <view class="item-header flex-ac">
             <image class="w60" src="../../assets/images/index/index-visit.png" mode="widthFix" />
             <text class="c-nomal ">&nbsp;&nbsp;参观预约&nbsp;&nbsp;&nbsp;</text>
-            <text class="c-light">|&nbsp;&nbsp;time</text>
+            <text class="c-light">|&nbsp;&nbsp;{{item.updated}}</text>
           </view>
-          <view onTap="toTrackDetail" class="item-content flex-sb-ac p-l-50">
+          <view onTap="toTrackDetail" data-id="{{item.eventId}}" class="item-content flex-sb-ac p-l-50">
             
             <view class="text p30 c-black lh-60 fwb">
-              <view >预约时间</view>
-              <view >支队名称</view>
+              <view >{{item.eventTime}}</view>
+              <view >{{item.title}}</view>
             </view>
-            <view class="state flex-sb-ac">
-              <image class="w40" src="../../assets/images/input/success.png" mode="widthFix" />
-              <text class="c-success">&nbsp;&nbsp;预约成功</text>
-            </view>
+            
+            <template is="status" data="{{state:item.status}}" />
             
           </view>
         </view>

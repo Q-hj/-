@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-27 10:10:32
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-06-30 15:23:13
+ * @LastEditTime: 2022-07-01 16:58:09
  * @Description: 统一封装请求
  */
 let currentRequest;
@@ -28,20 +28,14 @@ export default function request(url, data, word, method) {
 					const code = res.data.code;
 					if (code == 200) return resolve(res.data.data || res.data);
 					if (code == 401) return reLogin();
-					console.log(res.data.message);
-					my.showToast({
-						type: "exception",
-						content: res.data.message,
-						duration: 2000,
-					});
+					// console.error(res.data.message);
+					reject(res.data.message);
+					getApp().showResult(res.data.message);
 				},
 				fail: (err) => {
 					if (err.status == 401) return reLogin();
-					my.showToast({
-						type: "fail",
-						content: "请求失败：" + err.errorMessage,
-						duration: 3000,
-					});
+					getApp().showResult("请求失败：" + err.errorMessage, 1);
+					reject(err);
 				},
 				complete: (res) => {
 					if (word) my.hideLoading();
@@ -51,11 +45,7 @@ export default function request(url, data, word, method) {
 	});
 }
 function reLogin() {
-	my.showToast({
-		type: "exception ",
-		content: "登录过期",
-		duration: 3000,
-	});
+	getApp().lightTip("登录过期,正在重新登录", 1);
 	getApp().login();
 	// .then(() => currentRequest());
 }

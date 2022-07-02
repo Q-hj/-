@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-27 08:59:27
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-06-30 17:59:36
+ * @LastEditTime: 2022-07-01 17:32:51
  * @Description: 全局应用实例
  */
 import request from "./utils/http/request";
@@ -12,15 +12,15 @@ App({
 		fileHost: "https://xfcgyy.119.gov.cn/publicApi/img/obs?url=",
 		clientId: "SPuggfCQVFTlLohuRF4NPQr6QkafyfvP",
 		userInfo: null,
-		accessToken: null,
+		token: null,
 		// baseUrl: 'https://xfcgyy.119.gov.cn/publicApi',
-		// baseUrl: "http://192.168.0.117:9121/zfb/publicApi",
 		baseUrl: "http://124.222.90.238:9121/zfb/publicApi",
+		// baseUrl: "http://192.168.0.117:9121/zfb/publicApi",
 		// fileHost: "https://xfcgyy.119.gov.cn/publicApi/img/obs?url=",
 	},
 	onLaunch(options) {
 		// 第一次打开
-		// this.login();
+		this.login();
 	},
 	onShow(options) {
 		// 从后台被 scheme 重新打开
@@ -45,4 +45,20 @@ App({
 	post(url, data, word) {
 		return request(url, data, word, "POST");
 	},
+	lightTip(word, duration = 2) {
+		my.showToast({
+			type: "none",
+			content: word + "！",
+			duration: duration * 1000,
+		});
+	},
+	showResult(message, type = 0, duration = 2) {
+		const states = ["success", "fail"];
+		my.showToast({
+			type: states[type],
+			content: message,
+			duration: duration * 1000,
+		});
+	},
+	getNewDate() {},
 });

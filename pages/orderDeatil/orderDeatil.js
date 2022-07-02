@@ -1,52 +1,77 @@
 /*
  * @Date: 2022-06-28 16:46:09
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-06-29 11:34:49
+ * @LastEditTime: 2022-07-01 16:54:52
  * @Description: 预约详情
  */
+// import qs from "query-string";
+import { formatDate, queryToString } from "/utils/common";
+const app = getApp();
 Page({
 	data: {
 		scale: 17,
-		markers: [
-			{
-				iconPath: "/assets/icon/maker.png",
-				id: 10,
-				latitude: 30.279383,
-				longitude: 120.131441,
-				width: 40,
-				height: 40,
-			},
-		],
-		visitDetail: {
-			id: 2313,
-			phone: "15232313231",
-		},
+		markers: [],
+		visitDetail: {},
 		visitListProps: [
 			{ title: "参观预约ID", bind: "id" },
-			{ title: "参观场所", bind: "id" },
-			{ title: "参观日期", bind: "id" },
-			{ title: "参观时间段", bind: "id" },
-			{ title: "参观团名称", bind: "id" },
-			{ title: "参观人数", bind: "id" },
-			{ title: "联系人名称", bind: "id" },
-			{ title: "联系电话", bind: "phone" },
+			{ title: "参观场所", bind: "fireBrigadeName" },
+			{ title: "参观日期", bind: "eventTime" },
+			{ title: "参观时间段", bind: "visitTime" },
+			{ title: "参观团名称", bind: "groupName" },
+			{ title: "参观人数", bind: "number" },
+			{ title: "联系人名称", bind: "contactName" },
+			{ title: "联系电话", bind: "contactNumber" },
+		],
+		btnProps: [
+			{ url: "cancelFireVisit", text: "取消预约" },
+			{ url: "cancelFireVisit", text: "取消预约" },
+			{ url: "updateVisit", text: "前往修改" },
+			// evaluate
+			{ url: "confirm", text: "修改确认" },
+			{ url: "cancelFireVisit", text: "取消预约" },
+			{ url: "", text: "" },
+			{ url: "confirm", text: "修改确认" },
 		],
 	},
-	onLoad() {
-		return;
-		const eventChannel = this.getOpenerEventChannel();
-
-		// 监听 openerToOpened 事件，获取上一页面通过 eventChannel 传送到当前页面的数据
-		eventChannel.on("toDetail", (data) => {
-			console.log(data);
+	onLoad({ id }) {
+		app.get("/fireVisitAPPT/getFireVisit", { id }).then((visitDetail) => {
+			visitDetail.eventTime = formatDate(visitDetail.eventTime);
+			this.setData({
+				id,
+				visitDetail,
+				markers: [
+					{
+						iconPath: "/assets/icon/maker.png",
+						id: 1,
+						latitude: visitDetail.latitude,
+						longitude: visitDetail.longitude,
+						width: 40,
+						height: 40,
+					},
+				],
+			});
 		});
 	},
-	onTaptoHome(e) {
+	onTapToHome(e) {
 		my.navigateTo({
 			url: "/pages/index/index",
 		});
 	},
-	onTapHandleOrder(e) {},
+	handleOrder({
+		currentTarget: {
+			dataset: { url, text },
+		},
+	}) {
+		if (["updateVisit", "evaluate"].indexOf(url) >= 0) {
+			//评分页面
+			const detail = queryToString(this.data.visitDetail);
+			return my.redirectTo({ url: `/pages/${url}/${url}?` + detail });
+		}
+		const { id } = this.data.visitDetail;
+		app
+			.post("/fireVisitAPPT/" + url + "?id=" + id, text)
+			.then(() => my.navigateBack());
+	},
 	onTapMap(e) {
 		console.log(e);
 	},

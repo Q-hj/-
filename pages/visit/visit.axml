@@ -22,26 +22,22 @@
         应急管理部消防救援局
       </cover-view>
       <view class="btns flex-sb m-t-70">
-        <button class="brs p-0-70 bc-gray c-light" onTap="handleNoAgree">不同意</button>
-        <button class="brs p-0-70 bc-pink c-white" onTap="handleAgree">同意</button>
+        <button type="" inline inlineSize="large" onTap="handleNoAgree">不同意</button>
+        <button type="danger" inline inlineSize="large" onTap="handleAgree">同意</button>
       </view>
     </view>
   </popup>
-  <map onMarkerTap="onMarkerTap" onCalloutTap="onCalloutTap" markers="{{markers}}" longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" class="h600" show-location="{{true}}"></map>
+  <map onMarkerTap="onMarkerTap" onCalloutTap="onCalloutTap" markers="{{markers}}" longitude="{{longitude}}" latitude="{{latitude}}" 
+    scale="{{scale}}" class="h600" show-location="{{true}}"></map>
   <form form="visitForm" initialValues="{{form}}" requiredMarkStyle="optional" onFinish="onSubmit" onValuesChange="handleValuesChange">
-    <form-item label="参观场所"  name="" required form="">
-      <input-item mode=""  disabled value="{{fireBrigadeName}}"  placeholder="请选择（点击红圈）" />
+    <form-item label="参观场所" name="" required form="">
+      <input-item mode="" disabled value="{{fireBrigadeName}}" placeholder="请选择（点击红圈）" />
     </form-item>
-    <!-- <form-item label="参观时间" name="visitTime" form="visitForm">
-      <picker pickerholder="请选择" data="{{visitDateList}}" mode="form" onFormat="formatVisitDate" onChange="onChangeDate">
-        <view slot="title">选择参观日期</view>
-      </picker>
-    </form-item>  -->
-    <form-item label="参观时间" name="visitTime" form="visitForm"> 
-      <input-item mode="form" onFocus="handleSelect" value="{{visitDate}}" placeholder="选择参观日期" />
-    </form-item> 
+   <form-item label="参观时间" name="visitTime" form="visitForm">
+      <input-item mode="form" onFocus="handleSelect" value="{{visitDate+'   '+visitTime }}" placeholder="选择参观日期" />
+    </form-item>
     <form-item label="参观人数" name="number" form="visitForm">
-      <stepper step="{{1}}" min="{{1}}" max="{{maxNumber}}" mode="form" />
+      <stepper step="{{1}}" min="{{apptnumberMin}}" max="{{apptnumberMax}}" mode="form" />
     </form-item>
     <form-item label="参观团名称" name="groupName" required form="visitForm">
       <input-item mode="form" placeholder="自定义填写，如**单位" />
@@ -49,8 +45,8 @@
     <form-item label="" name="remarks" required form="visitForm">
       <input-item mode="form" placeholder="请输入备注信息" />
     </form-item>
-    <form-item label="联系方式" class='phoneInput'  name="contactNumber" required form="visitForm">
-      <input-item mode="form"   maxLength='{{11}}' placeholder="请输入手机号" />
+    <form-item label="联系方式" class='phoneInput' name="contactNumber" required form="visitForm">
+      <input-item mode="form" maxLength='{{11}}' placeholder="请输入手机号" />
       <view onTap='getCode' style="{{cursor:countdown? 'not-allowed':'nomal'}}" a:if='{{!userPhone}}' class="getCode-bth abs brs p10 border-red fz-small c-red">
         <text a:if="{{!countdown}}">获取验证码</text>
         <text a:else>{{vcodeTime}}</text>

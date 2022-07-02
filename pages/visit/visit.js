@@ -1,20 +1,22 @@
 /*
  * @Date: 2022-06-29 10:52:21
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-06-30 17:58:55
+ * @LastEditTime: 2022-07-01 14:39:44
  * @Description: 场馆预约
  */
 var app = getApp();
 import user from "/utils/User/user";
-import { formatDate } from "/utils/index";
+import { formatDate, formatIntDate } from "/utils/common";
 Page({
 	data: {
-		popupVisible: false,
+		popupVisible: true,
 		longitude: 120.131441,
 		latitude: 30.279383,
-		scale: 11,
+		scale: 13,
 		countdown: false,
-		maxNumber: 10,
+		apptnumberMin: 1,
+		apptnumberMax: 10,
+		fireBrigadeId: 0,
 		fireBrigadeName: "",
 		form: {
 			contactNumber: "",
@@ -27,18 +29,19 @@ Page({
 			number: 1,
 			remarks: "",
 			geocodedCode: "",
-			fireBrigadeId: "",
 		},
 		vcode: null,
 		visitDate: "",
+		visitTime: "",
 		visitDateList: [],
 		vcodeTime: 60,
 	},
 	onLoad() {
-		user.getLocation().then(({ latitude, longitude }) => {
+		user.getLocation().then(({ latitude, longitude, districtAdcode }) => {
 			this.setData({
 				latitude,
 				longitude,
+				geocodedCode: districtAdcode,
 			});
 			const range = 1;
 			const params = {
@@ -90,19 +93,15 @@ Page({
 		this.setData({
 			form: {
 				...form,
-				fireBrigadeId: markerId,
 			},
+			fireBrigadeId: markerId,
 			fireBrigadeName: currentvenues.name,
 		});
 		// 获取场馆开放时间
 		markerId = 4907; //测试
 		app.get("/fireBrigades/visitDateList", { id: markerId }).then((dateList) => {
 			if (!dateList.length) {
-				my.showToast({
-					type: "exception ",
-					content: "该场馆暂无开放时间， \n请选择其他场馆",
-					duration: 1000,
-				});
+				app.lightTip("该场馆暂无开放时间，请选择其他场馆");
 				this.setData({ visitDateList: [] });
 				return;
 			}
@@ -113,14 +112,38 @@ Page({
 			this.setData({ visitDateList });
 		});
 	},
-	onCalloutTap({ markerId }) {
-		console.log(markerId);
-		return;
-		my.navigateTo({
-			// url: "/fireBrigade/v2/fireBrigadeDetailsV2?fireBrigadeId=" + authId.id,
+	handleSelect() {
+		if (!this.data.fireBrigadeName) return app.lightTip("请先选择参观场所");
+		my.multiLevelSelect({
+			title: "选择参观日期",
+			list: this.data.visitDateList,
+			success: ({ result }) => {
+				if (!result) return;
+				this.setData({
+					visitDate: result[0].name,
+					visitTime: result[1].name,
+				});
+
+				const params = {
+					id: this.data.fireBrigadeId,
+					date: formatIntDate(this.data.visitDate),
+				};
+				app
+					.get("/fireBrigades/visitDate", params)
+					.then(({ apptnumberMax, apptnumberMin }) => {
+						this.setData({ apptnumberMax, apptnumberMin });
+					})
+					.catch(() =>
+						this.setData({
+							visitDate: "",
+							visitTime: "",
+						})
+					);
+			},
 		});
 	},
 	getCode() {
+		if (this.data.countdown) return;
 		const resPhone = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/;
 		const phone = this.data.form.contactNumber;
 
@@ -128,13 +151,9 @@ Page({
 		if (!resPhone.test(phone))
 			return my.alert({ title: "提示", content: "手机号码格式不正确！" });
 		// 发送验证码
-		app.post("/sms/vcode", { phone }).then(() => {
-			my.showToast({
-				type: "exception",
-				content: "验证码已发送",
-				duration: 1000,
-			});
-			this.setData({ countdown: true });
+		app.post("/sms/vcode", { phone }).then(({ message }) => {
+			app.lightTip("验证码已发送");
+			this.setData({ countdown: true, vcode: message });
 			this.handleCountdown();
 		});
 	},
@@ -151,28 +170,24 @@ Page({
 		}, 1000);
 	},
 	onSubmit(form) {
-		let word = "";
-		if (this.data.form.vcode != form.vcode) word = "验证码不正确";
-		if (!this.data.form.vcode) word = "请验证手机号";
-		if (!this.data.visitDate) word = "请选择参观时间";
-		if (word) {
-			my.showToast({
-				type: "exception ",
-				content: word + "！",
-				duration: 1000,
-			});
-			return;
-		}
+		if (!this.data.visitDate) return app.lightTip("请选择参观时间");
+		if (this.data.vcode != form.vcode) return app.lightTip("验证码不正确");
+		if (!form.vcode) return app.lightTip("请验证手机号");
 
-		console.log(JSON.stringify(form));
-	},
-	handleSelect() {
-		my.multiLevelSelect({
-			title: this.data.fireBrigadeName ? "选择参观日期" : "请先选择参观场所",
-			list: this.data.visitDateList,
-			success: ({ result }) =>
-				result &&
-				this.setData({ visitDate: result[0].name + "~" + result[1].name }),
+		const { visitDate, visitTime, geocodedCode, fireBrigadeId } = this.data;
+
+		const params = {
+			...form,
+			fireBrigadeId,
+			geocodedCode,
+			visitTime,
+			eventTime: formatIntDate(visitDate),
+		};
+		app.post("/fireVisitAPPT/saveFireVisit", params).then(({ message }) => {
+			app.showResult(message);
+			setTimeout(() => {
+				my.redirectTo({ url: "/pages/history/history" });
+			}, 1000);
 		});
 	},
 	handleValuesChange(value, form) {
@@ -180,6 +195,13 @@ Page({
 		// if (value.hasOwnProperty("contactNumber")) this.setData({ form });
 		// 输入内容时 更新form
 		this.setData({ form });
+	},
+	onCalloutTap({ markerId }) {
+		console.log(markerId);
+		return;
+		my.navigateTo({
+			url: "/pages/history/history?fireBrigadeId=" + authId.id,
+		});
 	},
 	handleNoAgree() {
 		my.navigateBack();

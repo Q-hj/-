@@ -1,7 +1,10 @@
+
+<import-sjs name="{props}" from="../template/status.sjs" />
+
 <view class="view">
   <view class="result flex-col-ac">
-    <image class='w25p m-t-30' src="/assets/images/input/success.png" mode="widthFix" />
-    <view class="c-success " style="font-size:42rpx;">预约成功</view>
+    <image class='w25p m-t-30' src="/assets/images/input/{{props[visitDetail.status].icon}}.png" mode="widthFix" />
+    <view class="c-{{props[visitDetail.status].icon}} " style="font-size:42rpx;padding-top:30rpx">{{props[visitDetail.status].text}}</view>
     <view class="c-light fz-small lh-100">情况说明：三日内反馈预约结果，感射您对消防工作的支持</view>
   </view>
   <map onTap="onTapMap" onMarkerTap="onMarkerTap" markers="{{markers}}" class="h400" longitude="{{markers[0].longitude}}" 
@@ -9,18 +12,20 @@
   <view class="detail  m-t-30 ">
     <view class="detailProp fz-large  p-15-50 flex-sb" a:for="{{visitListProps}}">
       <text class="c-light">{{item.title}}</text>
-      <text class="c-nomal">{{item.bind}}</text>
+      <text class="c-nomal">{{visitDetail[item.bind]}}</text>
       
     </view>
     <view class="comment h400">
       <view class="detailProp fz-large  p-15-50  ">
         <text class="c-light ">备注</text>
-        <view class="c-nomal p30">{{visitDetail.phone}}</view>
+        <view class="c-nomal p30">{{visitDetail.remarks}}</view>
       </view>
     </view>
   </view>
-  <view class="footer warp fixed l-0 r-0 b-30 flex-sb w2">
-    <button class="bc-red   c-white fz-nomal" onTap="onTaptoHome">回到首页</button>
-    <button class="bc-red   c-white fz-nomal" onTap="onTapHandleOrder">取消预约</button>
+  <view class="footer warp fixed l-0 r-0 b-30 flex-sb {{visitDetail.status==5?'w1':'w2'}}">
+    <button class="bc-red   c-white fz-nomal" onTap="onTapToHome">回到首页</button>
+    <block a:for="{{btnProps}}">
+      <button a:if="{{visitDetail.status==index&&item.url}}" data-url='{{item.url}}' data-text='{{item.text}}' onTap="handleOrder" class="bc-red c-white fz-nomal">{{item.text}}</button>
+     </block>
   </view>
 </view>
