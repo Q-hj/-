@@ -1,0 +1,12 @@
+<view class='my-list'>
+    <view  class='my-list-item' a:for={{list}}>
+      <tag class='tag' type={{index<3?'danger':'primary'}} >{{item.tag}}</tag>
+        <image src={{item.imgPath}}></image>
+        <cover-view>
+            <text>{{item.title}}</text>
+        </cover-view>
+            <view class='content'>
+            <text>{{item.content}}</text>
+            </view>
+    </view>
+</view>

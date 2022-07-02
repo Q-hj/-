@@ -1,0 +1,20 @@
+<view class="view bc-white">
+  <view class="title bc-theme tac lh-100 c-white">参观预约历史</view>
+  <view class="history">
+    <view a:for="{{ orderList }}" onTap="toDetail" class="order border-b flex-sb p40 c-light">
+      <view class="left">
+        
+        <view class="fz-large">
+          <text class=" c-deep">杭州支队</text>&nbsp;></view>
+        <view class="lh-60 m-t-10">参观团名称:&nbsp;&nbsp;{{item.name}}</view>
+        <view class=" ">参观时间:&nbsp;&nbsp;</view>
+      </view>
+      
+      <view class="right flex-ac">
+        <image class="w40" src="../../assets/images/input/success.png" mode="widthFix" />
+        <text class="c-success">&nbsp;&nbsp;预约成功</text>
+        
+      </view>
+    </view>
+  </view>
+</view>

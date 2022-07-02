@@ -1,0 +1,74 @@
+<view>
+  <popup visible="{{popupVisible}}" maskClosable="{{false}}" position="center" animation="{{true}}" showCloseIcon="{{false}} className='popup'">
+    <view class="popupContent p30">
+      
+      <cover-view class='c-deep fz-large tac fwb'>安全提示</cover-view>
+      <cover-view class='lh-60 m-t-30'>
+        亲爱的预约体验者：
+      </cover-view>
+      <cover-view class='indent-2'>
+        <text class=' lh-40 '>
+          本体验馆内的所有项目均免费提供给市民体验。请各位预约体验者在体验时注意自身的人身安全及财产安全，无民事行为能力人或限制行为能力人需在监护人陪同下进行体验。
+        </text></cover-view>
+      <cover-view class='indent-2'>
+        <text class=' lh-40 '>
+          如在体验中因预约体验者自身原因所造成的人身及财产损害后果，本单位概不承担。
+        </text></cover-view>
+      <cover-view class='indent-2 ' style='font-weight:800;color:#000;'>
+        
+        <text class=' lh-40 '>   预约体验者进行预约需仔细阅读并同意本提示。
+        </text></cover-view>
+      <cover-view class='' style='text-align:right;'>
+        应急管理部消防救援局
+      </cover-view>
+      <view class="btns flex-sb m-t-70">
+        <button class="brs p-0-70 bc-gray c-light" onTap="handleNoAgree">不同意</button>
+        <button class="brs p-0-70 bc-pink c-white" onTap="handleAgree">同意</button>
+      </view>
+    </view>
+  </popup>
+  <map onMarkerTap="onMarkerTap" onCalloutTap="onCalloutTap" markers="{{markers}}" longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" class="h600" show-location="{{true}}"></map>
+  <form form="visitForm" initialValues="{{form}}" requiredMarkStyle="optional" onFinish="onSubmit" onValuesChange="handleValuesChange">
+    <form-item label="参观场所"  name="" required form="">
+      <input-item mode=""  disabled value="{{fireBrigadeName}}"  placeholder="请选择（点击红圈）" />
+    </form-item>
+    <!-- <form-item label="参观时间" name="visitTime" form="visitForm">
+      <picker pickerholder="请选择" data="{{visitDateList}}" mode="form" onFormat="formatVisitDate" onChange="onChangeDate">
+        <view slot="title">选择参观日期</view>
+      </picker>
+    </form-item>  -->
+    <form-item label="参观时间" name="visitTime" form="visitForm"> 
+      <input-item mode="form" onFocus="handleSelect" value="{{visitDate}}" placeholder="选择参观日期" />
+    </form-item> 
+    <form-item label="参观人数" name="number" form="visitForm">
+      <stepper step="{{1}}" min="{{1}}" max="{{maxNumber}}" mode="form" />
+    </form-item>
+    <form-item label="参观团名称" name="groupName" required form="visitForm">
+      <input-item mode="form" placeholder="自定义填写，如**单位" />
+    </form-item>
+    <form-item label="" name="remarks" required form="visitForm">
+      <input-item mode="form" placeholder="请输入备注信息" />
+    </form-item>
+    <form-item label="联系方式" class='phoneInput'  name="contactNumber" required form="visitForm">
+      <input-item mode="form"   maxLength='{{11}}' placeholder="请输入手机号" />
+      <view onTap='getCode' style="{{cursor:countdown? 'not-allowed':'nomal'}}" a:if='{{!userPhone}}' class="getCode-bth abs brs p10 border-red fz-small c-red">
+        <text a:if="{{!countdown}}">获取验证码</text>
+        <text a:else>{{vcodeTime}}</text>
+      </view>
+    </form-item>
+    <form-item label="验证码" a:if='{{!userPhone}}' name="vcode" required form="visitForm">
+      <input-item mode="form" placeholder="请输入收到的验证码" />
+    </form-item>
+    <form-item label="姓名" name="contactName" required form="visitForm">
+      <input-item mode="form" placeholder="请输入真实姓名" />
+    </form-item>
+    <form-item label="性别" name="sex" form="visitForm" required>
+      <radio-group mode="form" position="horizontal">
+        <radio-item value="{{0}}">男</radio-item>
+        <radio-item value="{{1}}">女</radio-item>
+      </radio-group>
+    </form-item>
+    <button slot="footer" type="danger" mode="form" form="visitForm" htmlType="submit">提交
+    </button>
+  </form>
+</view>

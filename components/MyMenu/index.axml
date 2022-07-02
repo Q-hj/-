@@ -1,0 +1,7 @@
+   <view class='my-menu'>
+        <view class='menu-item' data-item='{{item}}' a:for={{list}} onTap="handleTap">
+            <image  src='/assets/icon/{{item.icon}}.png' />
+           
+            <text>{{item.name}}</text>
+        </view>
+    </view>

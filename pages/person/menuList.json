@@ -1,0 +1,23 @@
+{
+  "likeList": [
+    { "name": "点赞", "icon": "like" },
+    { "name": "评论", "icon": "comment" },
+    { "name": "收藏", "icon": "collect" }
+  ],
+  "excitationList": [
+    { "name": "新人福利", "icon": "welfare" },
+    { "name": "发布奖励", "icon": "issue" },
+    { "name": "我的勋章", "icon": "medal" }
+  ],
+  "roamList": [
+    { "name": "你问我答", "icon": "QandA" },
+    { "name": "照片墙", "icon": "photoWall" },
+    { "name": "云游心得", "icon": "experience" }
+  ],
+  "aboutList": [
+    { "name": "设置", "icon": "setting" },
+    { "name": "意见反馈", "icon": "feedback" },
+    { "name": "加入我们", "icon": "join" },
+    { "name": "合作", "icon": "cooperation" }
+  ]
+}

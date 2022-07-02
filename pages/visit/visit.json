@@ -1,0 +1,15 @@
+{
+	"defaultTitle": "参观预约",
+	"usingComponents": {
+		"popup": "antd-mini/es/Popup/index",
+		"form": "antd-mini/es/Form/index",
+		"form-item": "antd-mini/es/Form/FormItem/index",
+		"input-item": "antd-mini/es/InputItem/index",
+		"stepper": "antd-mini/es/Stepper/index",
+		"switch": "antd-mini/es/Switch/index",
+		"picker": "antd-mini/es/Picker/index",
+		"button": "antd-mini/es/Button/index",
+		"radio-group": "antd-mini/es/RadioGroup/index",
+		"radio-item": "antd-mini/es/RadioGroup/RadioItem/index"
+	}
+}

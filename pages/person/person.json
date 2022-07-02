@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "tag": "antd-mini/es/Tag/index",
+    "container": "antd-mini/es/Container/index",
+    "avatar": "antd-mini/es/Avatar/index",
+    "my-menu": "/components/MyMenu/index.axml",
+    "my-card": "/components/MyCard/index.axml"
+  }
+}

@@ -1,0 +1,23 @@
+{
+	"pages": [
+		"pages/index/index",
+		"pages/visit/visit",
+		"pages/order/order",
+		"pages/orderDeatil/orderDeatil",
+		"pages/history/history"
+	],
+
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarTextStyle": "white",
+		"titleBarColor": "#930303",
+		"defaultTitle": ""
+	},
+
+	"lazyCodeLoading": "requiredComponents",
+	"permission": {
+		"scope.userLocation": {
+			"desc": "您的位置信息将用于获取附近的参观场所与导航"
+		}
+	}
+}
