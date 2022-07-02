@@ -1,45 +1,50 @@
 /*
  * @Date: 2022-06-27 10:10:32
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-06-30 10:15:30
+ * @LastEditTime: 2022-07-01 17:38:57
  * @Description: 首页
  */
 var app = getApp();
+import { formatDate } from "/utils/common";
 Page({
 	data: {
 		list: [],
 	},
-	async onLoad(query) {
-		await app.login();
-		setTimeout(() => {
-			app.get("/notifications").then((res) => {
-				console.log(res);
-				this.setData({});
-			});
-		}, 1000);
-	},
+	onLoad(query) {},
 
 	onReady() {
 		// 页面加载完成
 	},
 	onShow() {
 		// 页面显示
+		this.getList();
 	},
-	toTrackDetail() {
+	getList() {
+		setTimeout(() => {
+			if (!app.globalData.token) return this.getList();
+			app.get("/notifications").then((list) => {
+				list = list.map((e) => ({
+					...e,
+					eventTime: formatDate(e.eventTime),
+					updated: formatDate(e.updated),
+				}));
+				this.setData({ list });
+			});
+		}, 500);
+	},
+	formatDate(value) {
+		if (!value) return "";
+		const date = new Date(value * 1000).toJSON();
+		console.log(date);
+		return date.slice(0, 10);
+	},
+	toTrackDetail({
+		currentTarget: {
+			dataset: { id },
+		},
+	}) {
 		my.navigateTo({
-			url: "/pages/orderDeatil/orderDeatil",
-			events: {
-				// 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-				openedToOpener(data) {
-					console.log(data); // { "message": "Hello Opener Page!" }
-				},
-			},
-			success(res) {
-				// 通过 eventChannel 向被打开页面传送数据
-				res.eventChannel.emit("toDetail", {
-					message: "来自首页",
-				});
-			},
+			url: "/pages/orderDeatil/orderDeatil?id=" + id,
 		});
 	},
 	onUnload() {

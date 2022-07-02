@@ -1,0 +1,12 @@
+<!-- 预约状态模板 -->
+
+<import-sjs name="{props}" from="./status.sjs" />
+
+<template name="status">
+  <block a:for="{{props}}">
+    <view class="state flex-sb-ac" a:if="{{state==index}}">
+      <image class="w40" src="/assets/images/input/{{item.icon}}.png" mode="widthFix" />
+      <text class="c-{{item.icon}} m-l-20 ">{{item.text}}</text>
+    </view>
+  </block>
+</template>
