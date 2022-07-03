@@ -20,7 +20,7 @@ App({
   },
   onLaunch(options) {
     // 第一次打开
-    // this.login();
+    this.login();
   },
   onShow(options) {
     // 从后台被 scheme 重新打开
