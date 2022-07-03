@@ -9,18 +9,18 @@ import user from "/utils/User/user";
 import store from "/utils/Storage/storage";
 App({
   globalData: {
-    fileHost: "https://xfcgyy.119.gov.cn/publicApi/img/obs?url=",
-    clientId: "SPuggfCQVFTlLohuRF4NPQr6QkafyfvP",
-    userInfo: null,
-    token: null,
+    // fileHost: "https://xfcgyy.119.gov.cn/publicApi/img/obs?url=",
+    fileBaseUrl: "http://124.222.90.238:9121/zfb/publicApi/img/obs?url=",
     // baseUrl: 'https://xfcgyy.119.gov.cn/publicApi',
     baseUrl: "http://124.222.90.238:9121/zfb/publicApi",
     // baseUrl: "http://192.168.0.117:9121/zfb/publicApi",
-    // fileHost: "https://xfcgyy.119.gov.cn/publicApi/img/obs?url=",
+    clientId: "SPuggfCQVFTlLohuRF4NPQr6QkafyfvP",
+    userInfo: null,
+    token: null,
   },
   onLaunch(options) {
     // 第一次打开
-    this.login();
+    // this.login();
   },
   onShow(options) {
     // 从后台被 scheme 重新打开
@@ -32,7 +32,7 @@ App({
       code,
     };
 
-    this.post("/aliApi/oauth/mina/token", params, "登录").then((res) => {
+    await this.post("/aliApi/oauth/mina/token", params, "登录").then((res) => {
       console.log(res.expires_in);
       const token = res.token_type + res.access_token;
       this.globalData.token = token;

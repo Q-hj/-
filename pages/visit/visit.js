@@ -9,7 +9,7 @@ import user from "/utils/User/user";
 import { formatDate, formatIntDate } from "/utils/common";
 Page({
   data: {
-    popupVisible: true,
+    popupVisible: false,
     longitude: 120.131441,
     latitude: 30.279383,
     scale: 13,
@@ -84,18 +84,19 @@ Page({
         });
     });
   },
+  onRegionChange(e) {
+    console.log(e);
+  },
   onMarkerTap({ markerId }) {
     const currentvenues = this.data.venuesList.filter(
       (item) => item.id == markerId
     )[0];
-    const form = this.data.form;
     if (!currentvenues) return;
     this.setData({
-      form: {
-        ...form,
-      },
       fireBrigadeId: markerId,
       fireBrigadeName: currentvenues.name,
+      venueLongitude: currentvenues.longitude,
+      venueLatitude: currentvenues.latitude,
     });
     // 获取场馆开放时间
     markerId = 4907; //测试
@@ -199,10 +200,17 @@ Page({
     this.setData({ form });
   },
   onCalloutTap({ markerId }) {
-    console.log(markerId);
-    return;
     my.navigateTo({
-      url: "/pages/history/history?fireBrigadeId=" + authId.id,
+      url: "/pages/venueDeatil/venueDeatil?fireBrigadeId=" + markerId,
+    });
+  },
+  handleNavigation() {
+    const { venueLongitude, venueLatitude, fireBrigadeName } = this.data;
+    my.openLocation({
+      longitude: venueLongitude,
+      latitude: venueLatitude,
+      name: fireBrigadeName,
+      address: " ",
     });
   },
   handleAgree() {
