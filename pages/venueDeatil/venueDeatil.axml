@@ -1,0 +1,35 @@
+<view>
+  <!--<image mode="scaleToFill" src="{{baseUrl+venueDetail.coverImg}}" /> -->
+  <image class="w100p" mode="widthFix" src="{{testImg}}" />
+  <view class="warp">
+    
+    <view class="star-level" style="font-size:60rpx;letter-spacing: 10rpx">
+        
+      <text class="c-yellow" a:for="{{ venueDetail.stars||3 }}">★</text>
+      <text class="c-white" a:for="{{ venueDetail.stars||2 }}">★</text>
+    
+    </view>
+    <view class="clear"></view>
+    <view class="summary card"  >
+      <view class="c-black fwb lh-60 w80p" >{{venueDetail.fireBrigadeName}}</view>
+      <view class="c-light fz-nomal lh-60 w80p" >{{venueDetail.address}}</view>
+      <image onTap="handleNav" class="abs " style="width:20%" mode="widthFix" src="/assets/images/fireBrigade/map.png" />
+      <view class="imgs " >
+        <swiper   
+        class="imgs-swiper " 
+        indicator-dots="{{indicatorDots}}"
+        acceleration
+        autoplay 
+        interval="{{false}}"
+        circular="{{false}}"
+      >
+        <block a:for="{{imgs}}">
+          <swiper-item key="swiper-item-{{index}}"> 
+            <image mode="widthFix" src="{{item||baseUrl+item}}" />
+          </swiper-item>
+        </block>
+      </swiper>
+      </view>
+    </view>
+  </view>
+</view>
