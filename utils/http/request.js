@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-27 10:10:32
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-01 16:58:09
+ * @LastEditTime: 2022-07-12 09:58:54
  * @Description: 统一封装请求
  */
 let currentRequest;
@@ -46,6 +46,12 @@ export default function request(url, data, word, method) {
 }
 function reLogin() {
 	getApp().lightTip("登录过期,正在重新登录", 1);
-	getApp().login();
+	getApp()
+		.login()
+		.then(() =>
+			my.navigateTo({
+				url: "/pages/index/index",
+			})
+		);
 	// .then(() => currentRequest());
 }
