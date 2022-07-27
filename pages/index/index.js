@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-27 10:10:32
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-27 16:32:45
+ * @LastEditTime: 2022-07-27 16:57:49
  * @Description: 首页
  */
 var app = getApp();
@@ -23,6 +23,7 @@ Page({
 		setTimeout(() => {
 			if (!app.globalData.token) return this.getList();
 			app.get("/notifications").then((list) => {
+				if (!list || !list.length) return;
 				list = list.map((e) => ({
 					...e,
 					eventTime: formatDate(e.eventTime),
