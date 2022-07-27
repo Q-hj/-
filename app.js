@@ -1,9 +1,10 @@
 /*
  * @Date: 2022-06-27 08:59:27
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-12 15:05:59
+ * @LastEditTime: 2022-07-27 16:43:10
  * @Description: 全局应用实例
  */
+import "./utils/date";
 import request from "./utils/http/request";
 import user from "/utils/User/user";
 import store from "/utils/Storage/storage";
