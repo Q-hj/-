@@ -1,4 +1,3 @@
-
 <import-sjs name="{props}" from="../template/status.sjs" />
 
 <view class="view">
@@ -23,9 +22,10 @@
     </view>
   </view>
   <view class="footer warp fixed l-0 r-0 b-30 flex-sb {{visitDetail.status==5?'w1':'w2'}}">
-    <button class="bc-red   c-white fz-nomal" onTap="onTapToHome">回到首页</button>
+    <button class="bc-red   c-white fz-nomal" style="width:{{visitDetail.status==5?'100%':''}}" onTap="onTapToHome">回到首页</button>
     <block a:for="{{btnProps}}">
-      <button a:if="{{visitDetail.status==index&&item.url}}" data-url='{{item.url}}' data-text='{{item.text}}' onTap="handleOrder" class="bc-red c-white fz-nomal">{{item.text}}</button>
-     </block>
+      <button a:if="{{visitDetail.status==index&&item.url}}" data-url='{{item.url}}' data-text='{{item.text}}' onTap="handleOrder" 
+        class="bc-red c-white fz-nomal">{{item.text}}</button>
+    </block>
   </view>
 </view>

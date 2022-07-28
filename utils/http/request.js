@@ -1,11 +1,12 @@
 /*
  * @Date: 2022-06-27 10:10:32
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-12 09:58:54
+ * @LastEditTime: 2022-07-28 10:44:18
  * @Description: 统一封装请求
  */
 let currentRequest;
 export default function request(url, data, word, method) {
+	console.log(word);
 	return new Promise((resolve, reject) => {
 		if (word)
 			my.showLoading({
@@ -26,7 +27,11 @@ export default function request(url, data, word, method) {
 				dataType: "json",
 				success: (res) => {
 					const code = res.data.code;
-					if (code == 200) return resolve(res.data.data || res.data);
+					if (code == 200) {
+						if (word) getApp().showResult(word + "成功");
+						resolve(res.data.data || res.data);
+						return;
+					}
 					if (code == 401) return reLogin();
 					// console.error(res.data.message);
 					reject(res.data.message);

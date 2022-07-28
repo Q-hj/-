@@ -1,11 +1,11 @@
 /*
  * @Date: 2022-06-28 16:46:09
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-01 16:54:52
+ * @LastEditTime: 2022-07-28 10:40:31
  * @Description: 预约详情
  */
 // import qs from "query-string";
-import { formatDate, queryToString } from "/utils/common";
+import { formatDate, flatQuery } from "/utils/common";
 const app = getApp();
 Page({
 	data: {
@@ -62,14 +62,20 @@ Page({
 			dataset: { url, text },
 		},
 	}) {
+		/**
+		 * 点击操作有两种处理，
+		 * 1.页面跳转，修改页和评价页
+		 * 2.修改状态，调用对应接口
+		 */
 		if (["updateVisit", "evaluate"].indexOf(url) >= 0) {
 			//评分页面
-			const detail = queryToString(this.data.visitDetail);
+			const detail = flatQuery(this.data.visitDetail);
+			// object参数需要先转为string
 			return my.redirectTo({ url: `/pages/${url}/${url}?` + detail });
 		}
 		const { id } = this.data.visitDetail;
 		app
-			.post("/fireVisitAPPT/" + url + "?id=" + id, text)
+			.post("/fireVisitAPPT/" + url + "?id=" + id, {}, text)
 			.then(() => my.navigateBack());
 	},
 	onTapMap(e) {

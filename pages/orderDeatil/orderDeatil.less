@@ -1,8 +1,10 @@
 .detail {
 	.detailProp {
+
 		&:nth-child(7),
 		&:nth-child(8) {
 			position: relative;
+
 			&::after {
 				content: "";
 				position: absolute;
@@ -12,26 +14,34 @@
 				left: 0;
 			}
 		}
+
 		&:nth-child(7) {
 			margin-top: 100rpx;
+
 			&::after {
 				top: -50rpx;
 			}
 		}
+
 		&:nth-child(8) {
 			margin-bottom: 100rpx;
+
 			&::after {
 				bottom: -50rpx;
 			}
 		}
 	}
 }
+
 .footer {
 	button {
 		border-radius: 0 15rpx 15rpx 0;
+
 		// margin: 0;
 		&:first-child {
 			border-radius: 15rpx 0 0 15rpx;
 		}
 	}
+
+
 }
