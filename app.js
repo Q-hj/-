@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-27 08:59:27
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-27 16:43:10
+ * @LastEditTime: 2022-07-29 15:20:29
  * @Description: 全局应用实例
  */
 import "./utils/date";

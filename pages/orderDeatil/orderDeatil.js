@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-28 16:46:09
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-28 10:40:31
+ * @LastEditTime: 2022-07-29 13:58:31
  * @Description: 预约详情
  */
 // import qs from "query-string";
@@ -25,11 +25,11 @@ Page({
 		btnProps: [
 			{ url: "cancelFireVisit", text: "取消预约" },
 			{ url: "cancelFireVisit", text: "取消预约" },
-			{ url: "updateVisit", text: "前往修改" },
-			// evaluate
-			{ url: "confirm", text: "修改确认" },
+			{ url: "visit", text: "前往修改" },
+
+			{ url: "evaluate", text: "我要评价" },
 			{ url: "cancelFireVisit", text: "取消预约" },
-			{ url: "", text: "" },
+			{ url: "", text: "状态6" },
 			{ url: "confirm", text: "修改确认" },
 		],
 	},
@@ -57,6 +57,13 @@ Page({
 			url: "/pages/index/index",
 		});
 	},
+
+	onTapToUpdate(e) {
+		const detail = flatQuery(this.data.visitDetail);
+		my.navigateTo({
+			url: "/pages/visit/visit?" + detail,
+		});
+	},
 	handleOrder({
 		currentTarget: {
 			dataset: { url, text },
@@ -67,7 +74,7 @@ Page({
 		 * 1.页面跳转，修改页和评价页
 		 * 2.修改状态，调用对应接口
 		 */
-		if (["updateVisit", "evaluate"].indexOf(url) >= 0) {
+		if (["visit", "evaluate"].indexOf(url) >= 0) {
 			//评分页面
 			const detail = flatQuery(this.data.visitDetail);
 			// object参数需要先转为string
@@ -79,9 +86,15 @@ Page({
 			.then(() => my.navigateBack());
 	},
 	onTapMap(e) {
-		console.log(e);
+		// console.log(e);
 	},
 	onMarkerTap(e) {
-		console.log(e);
+		const { latitude, longitude, fireBrigadeName } = this.data.visitDetail;
+		my.openLocation({
+			longitude: longitude,
+			latitude: latitude,
+			name: fireBrigadeName,
+			address: " ",
+		});
 	},
 });

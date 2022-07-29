@@ -1,10 +1,11 @@
 /*
  * @Date: 2022-06-30 14:09:10
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-28 10:36:57
+ * @LastEditTime: 2022-07-29 15:43:52
  * @Description: 常用功能函数
  */
 
+import "./date";
 /**
  * 日期毫秒值转为标准日期
  * @param {Number} value
@@ -22,10 +23,13 @@ export function formatDate(value) {
  * @param {String} value
  * @returns {Number}
  */
-export function formatIntDate(value) {
-	if (!value) return "";
-	const date = new Date(value).getTime();
-	return parseInt(date / 1000);
+export function formatIntDate(date) {
+	if (!date) return 0;
+	// YYYY-MM-DD 转为日期格式会将会推迟八小时（东八区）
+	// 详见 https://blog.csdn.net/s_y_w123/article/details/120566605
+	const fommatDate = date.replaceAll("-", "/");
+	const result = new Date(fommatDate).getTime();
+	return parseInt(result / 1000);
 }
 
 /**

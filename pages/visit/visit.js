@@ -1,18 +1,23 @@
 /*
  * @Date: 2022-06-29 10:52:21
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-12 09:51:26
+ * @LastEditTime: 2022-07-29 15:57:45
  * @Description: 场馆预约
  */
 var app = getApp();
+
 import user from "/utils/User/user";
 import { formatDate, formatIntDate } from "/utils/common";
 Page({
 	data: {
 		popupVisible: false,
+
 		longitude: 120.131441,
 		latitude: 30.279383,
 		scale: 13,
+
+		isUpdate: false,
+
 		countdown: false,
 		apptnumberMin: 1,
 		apptnumberMax: 10,
@@ -24,7 +29,7 @@ Page({
 			groupName: "",
 			visitTime: "",
 			eventTime: 0,
-			sex: "",
+			sex: 0,
 			vcode: "",
 			number: 1,
 			remarks: "",
@@ -36,53 +41,85 @@ Page({
 		visitDateList: [],
 		vcodeTime: 60,
 	},
-	onLoad() {
+	onLoad(query) {
+		if (query.id) {
+			// 修改
+			const form = { ...query, sex: +query.sex };
+			this.setData({ isUpdate: true, form });
+			console.log(this.data.form);
+
+			const {
+				latitude,
+				longitude,
+				geocodedCode,
+				fireBrigadeId,
+				fireBrigadeName,
+				eventTime,
+				visitTime,
+			} = query;
+
+			this.setData({
+				latitude,
+				longitude,
+				geocodedCode,
+				fireBrigadeId,
+				fireBrigadeName,
+				visitTime,
+				eventTime,
+			});
+
+			this.getVenuesList();
+			return;
+		}
 		user.getLocation().then(({ latitude, longitude, districtAdcode }) => {
 			this.setData({
 				latitude,
 				longitude,
 				geocodedCode: districtAdcode,
 			});
-			const range = 10;
-			const params = {
-				lat1: Number(latitude - range),
-				lat2: Number(latitude + range),
-				lon1: Number(longitude - range),
-				lon2: Number(longitude + range),
-			};
-			app
-				.post("/fireBrigades/visit/openlng", params, "场馆获取")
-				.then((venuesList) => {
-					this.setData({ venuesList });
-					const markers = venuesList.map((venues) => ({
-						id: venues.id,
-						latitude: venues.latitude,
-						longitude: venues.longitude,
-						iconPath: "/assets/images/icon_point_red.png",
-						width: 40,
-						height: 40,
-						customCallout: {
-							type: 1,
-							descList: [
-								{
-									desc:
-										venues.name +
-										"\n ★" +
-										venues.stars.toFixed(1) +
-										"  开放" +
-										venues.count +
-										"次" +
-										"\n 查看详情",
-
-									descColor: "#000",
-								},
-							],
-							isShow: 1,
-						},
-					}));
-					this.setData({ markers });
-				});
+			this.getVenuesList();
 		});
+	},
+	getVenuesList(range = 10) {
+		const { latitude, longitude } = this.data;
+		const params = {
+			lat1: Number(latitude - range),
+			lat2: Number(latitude + range),
+			lon1: Number(longitude - range),
+			lon2: Number(longitude + range),
+		};
+		app
+			.post("/fireBrigades/visit/openlng", params, "场馆获取")
+			.then((venuesList) => {
+				this.setData({ venuesList });
+				const markers = venuesList.map((venues) => ({
+					id: venues.id,
+					latitude: venues.latitude,
+					longitude: venues.longitude,
+					iconPath: "/assets/images/icon_point_red.png",
+					width: 40,
+					height: 40,
+					customCallout: {
+						type: 1,
+						descList: [
+							{
+								desc:
+									venues.name +
+									"\n ★" +
+									venues.stars.toFixed(1) +
+									"  开放" +
+									venues.count +
+									"次" +
+									"\n 查看详情",
+
+								descColor: "#000",
+							},
+						],
+						isShow: 1,
+					},
+				}));
+				this.setData({ markers });
+			});
 	},
 	onRegionChange(e) {
 		console.log(e);
@@ -183,6 +220,7 @@ Page({
 			geocodedCode,
 			visitTime,
 			eventTime: formatIntDate(visitDate),
+			// eventTime: new Date(visitDate).toInt(),
 		};
 		app.post("/fireVisitAPPT/saveFireVisit", params).then(({ message }) => {
 			app.showResult(message);

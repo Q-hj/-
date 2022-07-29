@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-27 08:59:27
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-06-27 09:59:47
+ * @LastEditTime: 2022-07-29 14:04:29
  * @Description: 封装 User 类
  */
 import store from "/utils/Storage/storage";
@@ -48,7 +48,7 @@ class User {
 				content: "定位中...",
 				delay: 1000,
 			});
-			console.log("getLocation");
+			// console.log("getLocation");
 			my.getLocation({
 				type: 1,
 				success: (res) => resolve(res),

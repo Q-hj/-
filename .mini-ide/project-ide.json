@@ -1,4 +1,6 @@
 {
   "enableLegacyRemoteDebug": false,
-  "ignoreHttpDomainCheck": true
+  "ignoreHttpDomainCheck": true,
+  "ignoreWebViewDomainCheck": true,
+  "disableSimulatorPermissionCheck": false
 }

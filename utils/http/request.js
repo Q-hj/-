@@ -1,12 +1,19 @@
 /*
  * @Date: 2022-06-27 10:10:32
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-28 10:44:18
+ * @LastEditTime: 2022-07-29 10:45:32
  * @Description: 统一封装请求
  */
 let currentRequest;
+/**
+ *
+ * @param {string} url 请求地址（不包含根路径）
+ * @param {object} data 请求参数
+ * @param {string} word 请求描述，用于结果反馈
+ * @param {string} method 请求方式（GET,POST）
+ * @returns {Promise}
+ */
 export default function request(url, data, word, method) {
-	console.log(word);
 	return new Promise((resolve, reject) => {
 		if (word)
 			my.showLoading({
@@ -35,7 +42,7 @@ export default function request(url, data, word, method) {
 					if (code == 401) return reLogin();
 					// console.error(res.data.message);
 					reject(res.data.message);
-					getApp().showResult(res.data.message);
+					getApp().showResult(res.data.message, 1);
 				},
 				fail: (err) => {
 					if (err.status == 401) return reLogin();
