@@ -1,1 +1,6 @@
-{ "defaultTitle": "我要评价", "usingComponents": {} }
+{
+	"defaultTitle": "我要评价",
+	"usingComponents": {
+		"button": "antd-mini/es/Button/index"
+	}
+}

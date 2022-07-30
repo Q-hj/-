@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-28 16:46:09
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-29 13:58:31
+ * @LastEditTime: 2022-07-30 11:12:35
  * @Description: 预约详情
  */
 // import qs from "query-string";
@@ -26,11 +26,11 @@ Page({
 			{ url: "cancelFireVisit", text: "取消预约" },
 			{ url: "cancelFireVisit", text: "取消预约" },
 			{ url: "visit", text: "前往修改" },
-
 			{ url: "evaluate", text: "我要评价" },
 			{ url: "cancelFireVisit", text: "取消预约" },
 			{ url: "", text: "状态6" },
 			{ url: "confirm", text: "修改确认" },
+			{ url: "", text: "" },
 		],
 	},
 	onLoad({ id }) {
