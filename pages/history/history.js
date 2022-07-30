@@ -1,26 +1,39 @@
 /*
  * @Date: 2022-06-28 16:36:17
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-01 17:20:15
+ * @LastEditTime: 2022-07-30 14:09:38
  * @Description: 参观预约历史记录
  */
 const app = getApp();
 import { formatDate } from "/utils/common";
 Page({
-	data: {},
+	data: {
+		page: 0,
+		records: [],
+	},
 	onLoad() {},
 	onShow() {
+		this.getList();
+	},
+	// 页面上拉触底事件的处理函数
+	onReachBottom() {
+		const { total, page } = this.data;
+		// 有存量时进行加载
+		if (total > page * 10) this.getList();
+	},
+	getList() {
+		this.setData({ page: ++this.data.page });
 		app
 			.get("/fireVisitAPPT/page", {
-				page: 1,
+				page: this.data.page,
 				pageSize: 10,
 			})
-			.then(({ records }) => {
+			.then(({ records, total }) => {
 				records = records.map((e) => ({
 					...e,
 					eventTime: formatDate(e.eventTime),
 				}));
-				this.setData({ records });
+				this.setData({ total, records: this.data.records.concat(records) });
 			});
 	},
 	toDetail({

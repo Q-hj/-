@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-07-01 15:12:10
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-30 11:12:22
+ * @LastEditTime: 2022-07-30 11:25:47
  * @Description: 状态绑定的 props
  */
 export const props = [
@@ -12,5 +12,5 @@ export const props = [
 	{ icon: "success", text: "初审中" },
 	{ icon: "fail", text: "预约取消" },
 	{ icon: "pending", text: "修改中" },
-	{ icon: "success", text: "已评价" },
+	// { icon: "success", text: "已评价" },
 ];
