@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-29 10:52:21
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-29 15:57:45
+ * @LastEditTime: 2022-08-04 15:40:51
  * @Description: 场馆预约
  */
 var app = getApp();
@@ -56,19 +56,25 @@ Page({
 				fireBrigadeName,
 				eventTime,
 				visitTime,
+				id,
 			} = query;
-
+			const visitDate = eventTime;
 			this.setData({
 				latitude,
 				longitude,
+				venueLongitude: longitude,
+				venueLatitude: latitude,
 				geocodedCode,
 				fireBrigadeId,
 				fireBrigadeName,
 				visitTime,
 				eventTime,
+				visitDate,
+				id: +id,
 			});
 
 			this.getVenuesList();
+			this.getVisitTime(query.id);
 			return;
 		}
 		user.getLocation().then(({ latitude, longitude, districtAdcode }) => {
@@ -122,7 +128,7 @@ Page({
 			});
 	},
 	onRegionChange(e) {
-		console.log(e);
+		// console.log(e);
 	},
 	onMarkerTap({ markerId }) {
 		const currentvenues = this.data.venuesList.filter(
@@ -135,9 +141,12 @@ Page({
 			venueLongitude: currentvenues.longitude,
 			venueLatitude: currentvenues.latitude,
 		});
-		// 获取场馆开放时间
-		markerId = 4907; //测试
-		app.get("/fireBrigades/visitDateList", { id: markerId }).then((dateList) => {
+		this.getVisitTime(markerId);
+	},
+	// 获取场馆开放时间
+	getVisitTime(id) {
+		id = 4907; //测试
+		app.get("/fireBrigades/visitDateList", { id }).then((dateList) => {
 			if (!dateList.length) {
 				app.lightTip("该场馆暂无开放时间，请选择其他场馆");
 				this.setData({ visitDateList: [] });
@@ -212,10 +221,11 @@ Page({
 		if (this.data.vcode != form.vcode) return app.lightTip("验证码不正确");
 		if (!form.vcode) return app.lightTip("请验证手机号");
 
-		const { visitDate, visitTime, geocodedCode, fireBrigadeId } = this.data;
+		const { visitDate, visitTime, geocodedCode, fireBrigadeId, id } = this.data;
 
 		const params = {
 			...form,
+			// id,
 			fireBrigadeId,
 			geocodedCode,
 			visitTime,

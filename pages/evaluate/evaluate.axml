@@ -1,13 +1,16 @@
 <!-- 评价 -->
 <view class="">
     <view class="warp   ">
-        <view class="score " style="font-size:60rpx;letter-spacing: 10rpx;margin:30rpx auto">
-            <text onTap="setScore" data-score="{{item}}" class="{{item<=score?'c-yellow':'c-nomal'}}" a:for="{{5}}">★</text>
+        <view class="score flex-sb-ac" style="font-size:60rpx;">
+            <text class="fz-nomal" style="">参观满意程度</text>
+            <view class="starts" style="letter-spacing: 10rpx;">
+                <text onTap="setScore" data-score="{{item}}" class="{{item<=score?'c-red':'c-nomal'}} " a:for="{{5}}">★</text>
+            </view>
         </view>
         <view class="textarea">
-            <textarea onInput="onInput" value="{{feedback}}" name="textarea" placeholder="输入反馈意见" />
+            <textarea onInput="onInput" value="{{feedback}}" name="textarea" placeholder="输入备注信息" />
         </view>
-        <button onTap="onSubmit" size="mini" type="danger">提交评价</button>
+        <button onTap="onSubmit" size="mini" type="danger">确认评分</button>
         
         
     </view>

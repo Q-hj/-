@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-28 16:36:17
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-30 14:09:38
+ * @LastEditTime: 2022-08-04 14:44:55
  * @Description: 参观预约历史记录
  */
 const app = getApp();
@@ -13,6 +13,7 @@ Page({
 	},
 	onLoad() {},
 	onShow() {
+		this.setData({ page: 0 });
 		this.getList();
 	},
 	// 页面上拉触底事件的处理函数

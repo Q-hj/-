@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-28 16:46:09
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-30 11:12:35
+ * @LastEditTime: 2022-08-04 14:33:43
  * @Description: 预约详情
  */
 // import qs from "query-string";
@@ -29,16 +29,18 @@ Page({
 			{ url: "evaluate", text: "我要评价" },
 			{ url: "cancelFireVisit", text: "取消预约" },
 			{ url: "", text: "状态6" },
-			{ url: "confirm", text: "修改确认" },
+			{ url: "change/confirm", text: "确认修改" },
 			{ url: "", text: "" },
 		],
 	},
 	onLoad({ id }) {
 		app.get("/fireVisitAPPT/getFireVisit", { id }).then((visitDetail) => {
 			visitDetail.eventTime = formatDate(visitDetail.eventTime);
+			const changeDate = formatDate(visitDetail.changeEventTime);
 			this.setData({
 				id,
 				visitDetail,
+				changeDate,
 				markers: [
 					{
 						iconPath: "/assets/icon/maker.png",

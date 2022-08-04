@@ -1,12 +1,12 @@
 /*
  * @Date: 2022-07-29 16:18:09
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-30 13:43:41
+ * @LastEditTime: 2022-08-03 16:25:31
  * @Description: 评价
  */
 var app = getApp();
 Page({
-	data: { feedback: "", score: 0, status: 3 },
+	data: { feedback: "", score: 5, status: 3 },
 	onLoad(query) {
 		const { id, status } = query;
 		this.setData({

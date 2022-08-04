@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-27 10:10:32
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-29 10:45:32
+ * @LastEditTime: 2022-08-03 16:29:01
  * @Description: 统一封装请求
  */
 let currentRequest;

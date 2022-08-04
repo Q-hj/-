@@ -27,14 +27,15 @@
       </view>
     </view>
   </popup>
-  <map onMarkerTap="onMarkerTap" onRegionChange="onRegionChange" onCalloutTap="onCalloutTap" markers="{{markers}}" longitude="{{longitude}}" latitude="{{latitude}}" 
-    scale="{{scale}}" class="h600" show-location="{{true}}"></map>
+  <map onMarkerTap="onMarkerTap" onRegionChange="onRegionChange" onCalloutTap="onCalloutTap" markers="{{markers}}" longitude="{{longitude}}" 
+    latitude="{{latitude}}" scale="{{scale}}" class="h600" show-location="{{true}}"></map>
   <form form="visitForm" initialValues="{{form}}" requiredMarkStyle="optional" onFinish="onSubmit" onValuesChange="handleValuesChange">
     <form-item label="参观场所" name="" required form="">
       <input-item mode="" disabled value="{{fireBrigadeName}}" placeholder="请选择（点击红圈）" />
-      <image a:if="{{ fireBrigadeName }}" onTap='handleNavigation' class="abs r-0 t-0" style="width:16px" mode="widthFix" src="/assets/images/navigation.png" />
+      <image a:if="{{ fireBrigadeName }}" onTap='handleNavigation' class="abs r-0 t-0" style="width:16px" mode="widthFix" 
+        src="/assets/images/navigation.png" />
     </form-item>
-   <form-item label="参观时间" name="visitTime" form="visitForm">
+    <form-item label="参观时间" name="visitTime" form="visitForm">
       <input-item mode="form" onFocus="handleSelect" value="{{visitDate+'   '+visitTime }}" placeholder="选择参观日期" />
     </form-item>
     <form-item label="参观人数" name="number" form="visitForm">
@@ -43,7 +44,7 @@
     <form-item label="参观团名称" name="groupName" required form="visitForm">
       <input-item mode="form" placeholder="自定义填写，如**单位" />
     </form-item>
-    <form-item label="" name="remarks" required form="visitForm">
+    <form-item label="" name="remarks" form="visitForm">
       <input-item mode="form" placeholder="请输入备注信息" />
     </form-item>
     <form-item label="联系方式" class='phoneInput' name="contactNumber" required form="visitForm">

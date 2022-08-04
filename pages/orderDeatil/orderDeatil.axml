@@ -6,6 +6,15 @@
     <view class="c-{{props[visitDetail.status].icon}} " style="font-size:42rpx;padding-top:30rpx">{{props[visitDetail.status].text}}</view>
     <view class="c-light fz-small lh-100">情况说明：三日内反馈预约结果，感射您对消防工作的支持</view>
   </view>
+  <view class="change" a:if="{{visitDetail.status==6}}">
+    <view class="tac fwb">
+      {{visitDetail.fireBrigadeName}}向您发起修改时间的请求
+    </view>
+    <view class="tac">参观时间从{{visitDetail.eventTime}}&nbsp;{{visitDetail.visitTime}}</view>
+    <view class="tac">
+      变更为{{changeDate}} {{visitDetail.changeVisitTime}}，请您修改确认！
+    </view>
+  </view>
   <map onTap="onTapMap" onMarkerTap="onMarkerTap" markers="{{markers}}" class="h400" longitude="{{markers[0].longitude}}" 
     latitude="{{markers[0].latitude}}" scale="{{scale}}"></map>
   <view class="detail  m-t-30 ">
@@ -31,10 +40,10 @@
     <!-- status为0时不显示回到首页  显示 取消预约和前往修改-->
     
     <!-- 左边按钮 -->
-    <button a:if="{{visitDetail.status}}" class="bc-red   c-white fz-nomal" style="width:{{visitDetail.status==5||visitDetail.feedback?'100%':''}}" 
-      onTap="onTapToHome">回到首页</button>
-    <button a:else class="bc-red   c-white fz-nomal" onTap="onTapToUpdate">前往修改</button>
-    
+    <button class="bc-red   c-white fz-nomal" style="width:{{visitDetail.status==5||visitDetail.feedback?'100%':''}}" onTap="onTapToHome">回到首页</button>
+    <!--<button a:if="{{visitDetail.status}}" class="bc-red   c-white fz-nomal" style="width:{{visitDetail.status==5||visitDetail.feedback?'100%':''}}" 
+      onTap="onTapToHome">回到首页</button><button a:else class="bc-red   c-white fz-nomal" onTap="onTapToUpdate">前往修改</button> -->
+
     <!-- 右边按钮 -->
     <block a:for="{{btnProps}}">
       <button a:if="{{visitDetail.status==index&&item.url&&!visitDetail.feedback}}" data-url='{{item.url}}' data-text='{{item.text}}' 
