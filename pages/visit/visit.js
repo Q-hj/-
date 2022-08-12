@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-29 10:52:21
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-08-12 16:28:22
+ * @LastEditTime: 2022-08-12 17:23:32
  * @Description: 场馆预约
  */
 var app = getApp();
@@ -106,23 +106,24 @@ Page({
 					iconPath: '/assets/images/icon_point_red.png',
 					width: 40,
 					height: 40,
-					customCallout: {
-						type: 1,
-						descList: [
-							{
-								desc:
-									venues.name +
-									'\n ★' +
-									venues.stars.toFixed(1) +
-									'  开放' +
-									venues.count +
-									'次' +
-									'\n 查看详情',
 
-								descColor: '#000',
-							},
-						],
-						isShow: 1,
+					// label无法单独绑定点击事件
+					label: {
+						content:
+							venues.name ||
+							venues.name +
+								'\n' +
+								'\n ★' +
+								venues.stars.toFixed(1) +
+								'  开放' +
+								venues.count +
+								'次' +
+								'\n 查看详情',
+						color: '#000000',
+						fontSize: 16,
+						borderRadius: 15,
+						bgColor: '#fef8f8',
+						padding: 18,
 					},
 				}));
 				this.setData({ markers });
@@ -131,7 +132,8 @@ Page({
 	onRegionChange(e) {
 		// console.log(e);
 	},
-	onMarkerTap({ markerId }) {
+	onMarkerTap({ markerId, ...a }) {
+		console.log(a);
 		const currentvenues = this.data.venuesList.filter(
 			(item) => item.id == markerId
 		)[0];
@@ -143,6 +145,7 @@ Page({
 			venueLatitude: currentvenues.latitude,
 		});
 		this.getVisitTime(markerId);
+		// this.setCustomCallout(currentvenues);
 	},
 	// 获取场馆开放时间
 	getVisitTime(id) {
@@ -159,6 +162,29 @@ Page({
 			}));
 			this.setData({ visitDateList });
 		});
+	},
+	// 设置maker文字提示
+	setCustomCallout(venues) {
+		const customCallout = {
+			type: 2,
+			descList: [
+				{
+					desc:
+						venues.name +
+						'\n' +
+						'\n ★' +
+						venues.stars.toFixed(1) +
+						'  开放' +
+						venues.count +
+						'次' +
+						'\n 查看详情',
+					descColor: '#000000',
+				},
+			],
+
+			isShow: 0,
+		};
+		this.setData({ customCallout });
 	},
 	handleSelect() {
 		if (!this.data.fireBrigadeName) return app.lightTip('请先选择参观场所');

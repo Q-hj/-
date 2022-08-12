@@ -27,8 +27,8 @@
       </view>
     </view>
   </popup>
-  <map onMarkerTap="onMarkerTap" onRegionChange="onRegionChange" onCalloutTap="onCalloutTap" markers="{{markers}}" longitude="{{longitude}}" 
-    latitude="{{latitude}}" scale="{{scale}}" class="h600" show-location="{{true}}"></map>
+  <map onMarkerTap="onMarkerTap" onRegionChange="onRegionChange" onCalloutTap="onCalloutTap" markers="{{markers}}" customCallout="{{customCallout}}" 
+    longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" class="h600" show-location="{{true}}"></map>
   <form form="visitForm" initialValues="{{form}}" requiredMarkStyle="optional" onFinish="onSubmit" onValuesChange="handleValuesChange">
     <form-item label="参观场所" name="" required form="">
       <input-item mode="" disabled value="{{fireBrigadeName}}" placeholder="请选择（点击红圈）" />

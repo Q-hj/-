@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-27 08:59:27
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-08-12 15:07:22
+ * @LastEditTime: 2022-08-12 16:56:50
  * @Description: 全局应用实例
  */
 import './utils/date';
@@ -14,7 +14,7 @@ App({
 		// fileBaseUrl: "http://124.222.90.238:9121/zfb/publicApi/img/obs?url=",
 		// baseUrl: "https://xfcgyy.119.gov.cn/zfb/publicApi",
 		baseUrl: 'http://124.222.90.238:9121/zfb/publicApi',
-		baseUrl: 'http://192.168.0.112:9121/zfb/publicApi',
+		// baseUrl: 'http://192.168.0.112:9121/zfb/publicApi',
 		clientId: 'SPuggfCQVFTlLohuRF4NPQr6QkafyfvP',
 		userInfo: null,
 		token: null,
