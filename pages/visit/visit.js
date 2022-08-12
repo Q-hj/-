@@ -1,13 +1,13 @@
 /*
  * @Date: 2022-06-29 10:52:21
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-08-04 15:40:51
+ * @LastEditTime: 2022-08-12 16:28:22
  * @Description: 场馆预约
  */
 var app = getApp();
 
-import user from "/utils/User/user";
-import { formatDate, formatIntDate } from "/utils/common";
+import user from '/utils/User/user';
+import { formatDate, formatIntDate } from '/utils/common';
 Page({
 	data: {
 		popupVisible: false,
@@ -22,22 +22,22 @@ Page({
 		apptnumberMin: 1,
 		apptnumberMax: 10,
 		fireBrigadeId: 0,
-		fireBrigadeName: "",
+		fireBrigadeName: '',
 		form: {
-			contactNumber: "",
-			contactName: "",
-			groupName: "",
-			visitTime: "",
+			contactNumber: '',
+			contactName: '',
+			groupName: '',
+			visitTime: '',
 			eventTime: 0,
 			sex: 0,
-			vcode: "",
+			vcode: '',
 			number: 1,
-			remarks: "",
-			geocodedCode: "",
+			remarks: '',
+			geocodedCode: '',
 		},
 		vcode: null,
-		visitDate: "",
-		visitTime: "",
+		visitDate: '',
+		visitTime: '',
 		visitDateList: [],
 		vcodeTime: 60,
 	},
@@ -59,6 +59,7 @@ Page({
 				id,
 			} = query;
 			const visitDate = eventTime;
+			// console.log(visitDate);
 			this.setData({
 				latitude,
 				longitude,
@@ -67,14 +68,14 @@ Page({
 				geocodedCode,
 				fireBrigadeId,
 				fireBrigadeName,
+				visitDate,
 				visitTime,
 				eventTime,
-				visitDate,
 				id: +id,
 			});
 
 			this.getVenuesList();
-			this.getVisitTime(query.id);
+			this.getVisitTime(query.fireBrigadeId);
 			return;
 		}
 		user.getLocation().then(({ latitude, longitude, districtAdcode }) => {
@@ -86,7 +87,7 @@ Page({
 			this.getVenuesList();
 		});
 	},
-	getVenuesList(range = 10) {
+	getVenuesList(range = 1) {
 		const { latitude, longitude } = this.data;
 		const params = {
 			lat1: Number(latitude - range),
@@ -95,14 +96,14 @@ Page({
 			lon2: Number(longitude + range),
 		};
 		app
-			.post("/fireBrigades/visit/openlng", params, "场馆获取")
+			.post('/fireBrigades/visit/openlng', params, '场馆获取')
 			.then((venuesList) => {
 				this.setData({ venuesList });
 				const markers = venuesList.map((venues) => ({
 					id: venues.id,
 					latitude: venues.latitude,
 					longitude: venues.longitude,
-					iconPath: "/assets/images/icon_point_red.png",
+					iconPath: '/assets/images/icon_point_red.png',
 					width: 40,
 					height: 40,
 					customCallout: {
@@ -111,14 +112,14 @@ Page({
 							{
 								desc:
 									venues.name +
-									"\n ★" +
+									'\n ★' +
 									venues.stars.toFixed(1) +
-									"  开放" +
+									'  开放' +
 									venues.count +
-									"次" +
-									"\n 查看详情",
+									'次' +
+									'\n 查看详情',
 
-								descColor: "#000",
+								descColor: '#000',
 							},
 						],
 						isShow: 1,
@@ -145,10 +146,10 @@ Page({
 	},
 	// 获取场馆开放时间
 	getVisitTime(id) {
-		id = 4907; //测试
-		app.get("/fireBrigades/visitDateList", { id }).then((dateList) => {
+		// id = 4907; //测试
+		app.get('/fireBrigades/visitDateList', { id }).then((dateList) => {
 			if (!dateList.length) {
-				app.lightTip("该场馆暂无开放时间，请选择其他场馆");
+				app.lightTip('该场馆暂无开放时间，请选择其他场馆');
 				this.setData({ visitDateList: [] });
 				return;
 			}
@@ -160,9 +161,9 @@ Page({
 		});
 	},
 	handleSelect() {
-		if (!this.data.fireBrigadeName) return app.lightTip("请先选择参观场所");
+		if (!this.data.fireBrigadeName) return app.lightTip('请先选择参观场所');
 		my.multiLevelSelect({
-			title: "选择参观日期",
+			title: '选择参观日期',
 			list: this.data.visitDateList,
 			success: ({ result }) => {
 				if (!result) return;
@@ -176,14 +177,14 @@ Page({
 					date: formatIntDate(this.data.visitDate),
 				};
 				app
-					.get("/fireBrigades/visitDate", params)
+					.get('/fireBrigades/visitDate', params)
 					.then(({ apptnumberMax, apptnumberMin }) =>
 						this.setData({ apptnumberMax, apptnumberMin })
 					)
 					.catch(() =>
 						this.setData({
-							visitDate: "",
-							visitTime: "",
+							visitDate: '',
+							visitTime: '',
 						})
 					);
 			},
@@ -194,12 +195,12 @@ Page({
 		const resPhone = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/;
 		const phone = this.data.form.contactNumber;
 
-		if (!phone) return my.alert({ title: "提示", content: "请填写手机号！" });
+		if (!phone) return my.alert({ title: '提示', content: '请填写手机号！' });
 		if (!resPhone.test(phone))
-			return my.alert({ title: "提示", content: "手机号码格式不正确！" });
+			return my.alert({ title: '提示', content: '手机号码格式不正确！' });
 		// 发送验证码
-		app.post("/sms/vcode", { phone }).then(({ message }) => {
-			app.lightTip("验证码已发送");
+		app.post('/sms/vcode', { phone }).then(({ message }) => {
+			app.lightTip('验证码已发送');
 			this.setData({ countdown: true, vcode: message });
 			this.handleCountdown();
 		});
@@ -217,25 +218,26 @@ Page({
 		}, 1000);
 	},
 	onSubmit(form) {
-		if (!this.data.visitDate) return app.lightTip("请选择参观时间");
-		if (this.data.vcode != form.vcode) return app.lightTip("验证码不正确");
-		if (!form.vcode) return app.lightTip("请验证手机号");
+		if (!this.data.visitDate) return app.lightTip('请选择参观时间');
+		if (this.data.vcode != form.vcode) return app.lightTip('验证码不正确');
+		if (!form.vcode) return app.lightTip('请验证手机号');
 
 		const { visitDate, visitTime, geocodedCode, fireBrigadeId, id } = this.data;
 
 		const params = {
 			...form,
-			// id,
+			id,
 			fireBrigadeId,
 			geocodedCode,
 			visitTime,
 			eventTime: formatIntDate(visitDate),
-			// eventTime: new Date(visitDate).toInt(),
+			// formId: '',
 		};
-		app.post("/fireVisitAPPT/saveFireVisit", params).then(({ message }) => {
+		const url = id ? 'editFireVisit' : 'saveFireVisit';
+		app.post('/fireVisitAPPT/' + url, params).then(({ message }) => {
 			app.showResult(message);
 			setTimeout(() => {
-				my.redirectTo({ url: "/pages/history/history" });
+				my.redirectTo({ url: '/pages/history/history' });
 			}, 1000);
 		});
 	},
@@ -247,7 +249,7 @@ Page({
 	},
 	onCalloutTap({ markerId }) {
 		my.navigateTo({
-			url: "/pages/venueDeatil/venueDeatil?fireBrigadeId=" + markerId,
+			url: '/pages/venueDeatil/venueDeatil?fireBrigadeId=' + markerId,
 		});
 	},
 	handleNavigation() {
@@ -256,7 +258,7 @@ Page({
 			longitude: venueLongitude,
 			latitude: venueLatitude,
 			name: fireBrigadeName,
-			address: " ",
+			address: ' ',
 		});
 	},
 	handleAgree() {

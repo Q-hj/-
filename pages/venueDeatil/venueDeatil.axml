@@ -1,12 +1,15 @@
 <view style="" class="bc-gray">
   <!--<image mode="scaleToFill" src="{{baseUrl+venueDetail.coverImg}}" /> -->
-  <image class="w100p" mode="widthFix" src="{{testImg}}" />
+  <view style="min-height:200rpx">
+    <image class="w100p" mode="widthFix" src="{{testImg}}" />
+  </view>
+  
   <view class="warp">
     
     <view class="star-level" style="font-size:60rpx;letter-spacing: 10rpx">
       
-      <text class="c-yellow" a:for="{{ venueDetail.stars||3 }}">★</text>
-      <text class="c-white" a:for="{{ venueDetail.stars||2 }}">★</text>
+      <text class="c-yellow" a:for="{{ stars}}">★</text>
+      <text class="c-white" a:for="{{ 5-stars }}">★</text>
       
     </view>
     <view class="clear"></view>
@@ -25,7 +28,9 @@
       </view>
     </view>
     <view class="content card m-t-30">
-      <view class="c-black  " style="font-size:40rpx;font-weight:600">场馆介绍</view>
+      <view class="c-black  " style="font-size:40rpx;font-weight:600">场馆介绍
+        <text class="fz-nomal c-light " style="font-weight:400;margin-left:20rpx" a:if="{{venueDetail.count}}">共开放{{venueDetail.count}}次</text>
+      </view>
       <view class="lh-40 m-t-30">{{ venueDetail.content||"" }}</view>
     </view>
   </view>

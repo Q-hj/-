@@ -1,21 +1,21 @@
 /*
  * @Date: 2022-06-27 08:59:27
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-08-01 15:28:41
+ * @LastEditTime: 2022-08-12 15:07:22
  * @Description: 全局应用实例
  */
-import "./utils/date";
-import request from "./utils/http/request";
-import user from "/utils/User/user";
-import store from "/utils/Storage/storage";
+import './utils/date';
+import request from './utils/http/request';
+import user from '/utils/User/user';
+import store from '/utils/Storage/storage';
 App({
 	globalData: {
-		fileBaseUrl: "https://xfcgyy.119.gov.cn/zfb/publicApi/img/obs?url=",
+		fileBaseUrl: 'https://xfcgyy.119.gov.cn/zfb/publicApi/img/obs?url=',
 		// fileBaseUrl: "http://124.222.90.238:9121/zfb/publicApi/img/obs?url=",
 		// baseUrl: "https://xfcgyy.119.gov.cn/zfb/publicApi",
-		baseUrl: "http://124.222.90.238:9121/zfb/publicApi",
-		// baseUrl: "http://192.168.0.123:9121/zfb/publicApi",
-		clientId: "SPuggfCQVFTlLohuRF4NPQr6QkafyfvP",
+		baseUrl: 'http://124.222.90.238:9121/zfb/publicApi',
+		baseUrl: 'http://192.168.0.112:9121/zfb/publicApi',
+		clientId: 'SPuggfCQVFTlLohuRF4NPQr6QkafyfvP',
 		userInfo: null,
 		token: null,
 	},
@@ -33,35 +33,35 @@ App({
 			code,
 		};
 
-		await this.post("/aliApi/oauth/mina/token", params, "登录").then((res) => {
+		await this.post('/aliApi/oauth/mina/token', params, '登录').then((res) => {
 			console.log(res.expires_in);
 			const token = res.token_type + res.access_token;
 			this.globalData.token = token;
-			store.set("token", token);
+			store.set('token', token);
 		});
 	},
 	get(url, data, word) {
-		return request(url, data, word, "GET");
+		return request(url, data, word, 'GET');
 	},
 	post(url, data, word) {
-		return request(url, data, word, "POST");
+		return request(url, data, word, 'POST');
 	},
 	showLoading(word, duration = 5) {
 		my.showLoading({
-			type: "none",
-			content: word + "...",
+			type: 'none',
+			content: word + '...',
 			duration: duration * 1000,
 		});
 	},
 	lightTip(word, duration = 2) {
 		my.showToast({
-			type: "none",
-			content: word + "！",
+			type: 'none',
+			content: word + '！',
 			duration: duration * 1000,
 		});
 	},
 	showResult(message, type = 0, duration = 2) {
-		const states = ["success", "fail"];
+		const states = ['success', 'fail'];
 		my.showToast({
 			type: states[type],
 			content: message,

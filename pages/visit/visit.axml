@@ -49,7 +49,7 @@
     </form-item>
     <form-item label="联系方式" class='phoneInput' name="contactNumber" required form="visitForm">
       <input-item mode="form" maxLength='{{11}}' placeholder="请输入手机号" />
-      <view onTap='getCode' style="{{cursor:countdown? 'not-allowed':'nomal'}}" a:if='{{!userPhone}}' class="getCode-bth abs brs p10 border-red fz-small c-red">
+      <view onTap='getCode' style="{{cursor:countdown? 'not-allowed':'nomal'}}" a:if='{{!userPhone}}' class="getCode-bth abs brs p15 border-red fz-small c-red">
         <text a:if="{{!countdown}}">获取验证码</text>
         <text a:else>{{vcodeTime}}</text>
       </view>

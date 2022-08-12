@@ -2,10 +2,10 @@
 	"pages": [
 		"pages/index/index",
 		"pages/visit/visit",
-		"pages/venueDeatil/venueDeatil",
 		"pages/order/order",
 		"pages/evaluate/evaluate",
 		"pages/orderDeatil/orderDeatil",
+		"pages/venueDeatil/venueDeatil",
 		"pages/history/history"
 	],
 
