@@ -1,6 +1,0 @@
-<!--.xml-->
-<box>
-  <image width='60' height='60' src='https://gw.alipayobjects.com/mdn/rms_a8e3ca/afts/img/A*1NvpQqfbis8AAAAAAAAAAABkARQnAQ'/>
-  <text text='X1' color='#FFFFFF' font-size='8' background-color='#FF0000' 
-        border-radius='6' padding-left='3' padding-right='3' right='0'/>
-</box>

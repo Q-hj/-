@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-29 10:52:21
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-08-12 17:23:32
+ * @LastEditTime: 2022-08-12 17:43:43
  * @Description: 场馆预约
  */
 var app = getApp();
@@ -10,7 +10,7 @@ import user from '/utils/User/user';
 import { formatDate, formatIntDate } from '/utils/common';
 Page({
 	data: {
-		popupVisible: false,
+		popupVisible: true,
 
 		longitude: 120.131441,
 		latitude: 30.279383,
@@ -95,39 +95,37 @@ Page({
 			lon1: Number(longitude - range),
 			lon2: Number(longitude + range),
 		};
-		app
-			.post('/fireBrigades/visit/openlng', params, '场馆获取')
-			.then((venuesList) => {
-				this.setData({ venuesList });
-				const markers = venuesList.map((venues) => ({
-					id: venues.id,
-					latitude: venues.latitude,
-					longitude: venues.longitude,
-					iconPath: '/assets/images/icon_point_red.png',
-					width: 40,
-					height: 40,
+		app.post('/fireBrigades/visit/openlng', params).then((venuesList) => {
+			this.setData({ venuesList });
+			const markers = venuesList.map((venues) => ({
+				id: venues.id,
+				latitude: venues.latitude,
+				longitude: venues.longitude,
+				iconPath: '/assets/images/icon_point_red.png',
+				width: 40,
+				height: 40,
 
-					// label无法单独绑定点击事件
-					label: {
-						content:
-							venues.name ||
-							venues.name +
-								'\n' +
-								'\n ★' +
-								venues.stars.toFixed(1) +
-								'  开放' +
-								venues.count +
-								'次' +
-								'\n 查看详情',
-						color: '#000000',
-						fontSize: 16,
-						borderRadius: 15,
-						bgColor: '#fef8f8',
-						padding: 18,
-					},
-				}));
-				this.setData({ markers });
-			});
+				// label无法单独绑定点击事件
+				label: {
+					content:
+						venues.name ||
+						venues.name +
+							'\n' +
+							'\n ★' +
+							venues.stars.toFixed(1) +
+							'  开放' +
+							venues.count +
+							'次' +
+							'\n 查看详情',
+					color: '#000000',
+					fontSize: 16,
+					borderRadius: 15,
+					bgColor: '#fef8f8',
+					padding: 18,
+				},
+			}));
+			this.setData({ markers });
+		});
 	},
 	onRegionChange(e) {
 		// console.log(e);

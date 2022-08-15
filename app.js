@@ -12,8 +12,8 @@ App({
 	globalData: {
 		fileBaseUrl: 'https://xfcgyy.119.gov.cn/zfb/publicApi/img/obs?url=',
 		// fileBaseUrl: "http://124.222.90.238:9121/zfb/publicApi/img/obs?url=",
-		// baseUrl: "https://xfcgyy.119.gov.cn/zfb/publicApi",
-		baseUrl: 'http://124.222.90.238:9121/zfb/publicApi',
+		baseUrl: "https://xfcgyy.119.gov.cn/zfb/publicApi",
+		// baseUrl: 'http://124.222.90.238:9121/zfb/publicApi',
 		// baseUrl: 'http://192.168.0.112:9121/zfb/publicApi',
 		clientId: 'SPuggfCQVFTlLohuRF4NPQr6QkafyfvP',
 		userInfo: null,
