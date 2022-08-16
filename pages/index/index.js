@@ -1,11 +1,11 @@
 /*
  * @Date: 2022-06-27 10:10:32
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-07-27 16:57:49
+ * @LastEditTime: 2022-08-16 16:29:17
  * @Description: 首页
  */
 var app = getApp();
-import { formatDate } from "/utils/common";
+import { formatDate } from '/utils/common';
 Page({
 	data: {
 		list: [],
@@ -22,7 +22,7 @@ Page({
 	getList() {
 		setTimeout(() => {
 			if (!app.globalData.token) return this.getList();
-			app.get("/notifications").then((list) => {
+			app.get('/notifications').then((list) => {
 				if (!list || !list.length) return;
 				list = list.map((e) => ({
 					...e,
@@ -34,7 +34,7 @@ Page({
 		}, 500);
 	},
 	formatDate(value) {
-		if (!value) return "";
+		if (!value) return '';
 		return new Date(value * 1000).format().slice(0, 10);
 	},
 	toTrackDetail({
@@ -43,7 +43,7 @@ Page({
 		},
 	}) {
 		my.navigateTo({
-			url: "/pages/orderDeatil/orderDeatil?id=" + id,
+			url: '/pages/orderDeatil/orderDeatil?id=' + id,
 		});
 	},
 	onUnload() {
@@ -61,9 +61,9 @@ Page({
 	onShareAppMessage() {
 		// 返回自定义分享信息
 		return {
-			title: "My App",
-			desc: "My App description",
-			path: "pages/index/index",
+			title: 'My App',
+			desc: 'My App description',
+			path: 'pages/index/index',
 		};
 	},
 });

@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-06-29 10:52:21
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-08-12 17:43:43
+ * @LastEditTime: 2022-08-16 15:44:56
  * @Description: 场馆预约
  */
 var app = getApp();
@@ -87,15 +87,17 @@ Page({
 			this.getVenuesList();
 		});
 	},
-	getVenuesList(range = 1) {
-		const { latitude, longitude } = this.data;
-		const params = {
-			lat1: Number(latitude - range),
-			lat2: Number(latitude + range),
-			lon1: Number(longitude - range),
-			lon2: Number(longitude + range),
-		};
-		app.post('/fireBrigades/visit/openlng', params).then((venuesList) => {
+	getVenuesList(range = 0.5) {
+		// const { latitude, longitude } = this.data;
+		// console.log([latitude, longitude]);
+		// const params = {
+		// 	lat1: Number(latitude - range),
+		// 	lat2: Number(latitude + range),
+		// 	lon1: Number(longitude - range),
+		// 	lon2: Number(longitude + range),
+		// };
+		const { geocodedCode } = this.data;
+		app.get('/fireBrigades/visit/open', { geocodedCode }).then((venuesList) => {
 			this.setData({ venuesList });
 			const markers = venuesList.map((venues) => ({
 				id: venues.id,
@@ -257,6 +259,7 @@ Page({
 			eventTime: formatIntDate(visitDate),
 			// formId: '',
 		};
+		console.log(url);
 		const url = id ? 'editFireVisit' : 'saveFireVisit';
 		app.post('/fireVisitAPPT/' + url, params).then(({ message }) => {
 			app.showResult(message);

@@ -1,11 +1,11 @@
 /*
  * @Date: 2022-06-28 16:36:17
  * @LastEditors: Mr.qin
- * @LastEditTime: 2022-08-04 14:44:55
+ * @LastEditTime: 2022-08-16 15:16:50
  * @Description: 参观预约历史记录
  */
 const app = getApp();
-import { formatDate } from "/utils/common";
+import { formatDate } from '/utils/common';
 Page({
 	data: {
 		page: 0,
@@ -13,7 +13,7 @@ Page({
 	},
 	onLoad() {},
 	onShow() {
-		this.setData({ page: 0 });
+		this.setData({ page: 0, records: [] });
 		this.getList();
 	},
 	// 页面上拉触底事件的处理函数
@@ -25,7 +25,7 @@ Page({
 	getList() {
 		this.setData({ page: ++this.data.page });
 		app
-			.get("/fireVisitAPPT/page", {
+			.get('/fireVisitAPPT/page', {
 				page: this.data.page,
 				pageSize: 10,
 			})
@@ -43,7 +43,7 @@ Page({
 		},
 	}) {
 		my.navigateTo({
-			url: "/pages/orderDeatil/orderDeatil?id=" + id,
+			url: '/pages/orderDeatil/orderDeatil?id=' + id,
 		});
 	},
 });
